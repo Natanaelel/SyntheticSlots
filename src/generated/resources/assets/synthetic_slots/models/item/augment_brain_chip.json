@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "synthetic_slots:item/augment_brain_chip"
+  }
+}
