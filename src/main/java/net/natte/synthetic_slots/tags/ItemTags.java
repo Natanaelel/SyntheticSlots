@@ -12,8 +12,9 @@ public class ItemTags {
     public static final TagKey<Item> CURIOS_HEAD = tag("curios:head");
     public static final TagKey<Item> CURIOS_ARMS = tag("curios:arms");
     public static final TagKey<Item> CURIOS_HANDS = tag("curios:hands");
+    public static final TagKey<Item> CURIOS_LEGS = tag("curios:legs");
 
-    public static final List<TagKey<Item>> TAG_KEYS = List.of(CURIOS_CURIO, CURIOS_HEAD, CURIOS_ARMS, CURIOS_HANDS);
+    public static final List<TagKey<Item>> TAG_KEYS = List.of(CURIOS_CURIO, CURIOS_HEAD, CURIOS_ARMS, CURIOS_HANDS, CURIOS_LEGS);
 
     private static TagKey<Item> tag(String key) {
         return TagKey.create(Registries.ITEM, ResourceLocation.parse(key));

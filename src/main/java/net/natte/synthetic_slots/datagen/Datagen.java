@@ -36,6 +36,7 @@ public class Datagen {
                 }
 
                 add("curios.identifier.arms", "Arm");
+                add("curios.identifier.legs", "Leg");
             }
         };
     }
