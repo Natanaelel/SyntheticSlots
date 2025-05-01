@@ -2,39 +2,39 @@ package net.natte.synthetic_slots.effect;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.ForgeMod;
+import top.theillusivec4.curios.api.SlotContext;
+
+import java.util.UUID;
+import java.util.function.Supplier;
 
 public class AttributeEffect implements ImplantEffect {
-    private final AttributeModifier attributeModifier;
-    private final Attribute attribute;
+    private final Modifier[] modifiers;
 
-    public AttributeEffect(String name, Attribute attribute, double value, AttributeModifier.Operation operation) {
-        this.attribute = attribute;
-        this.attributeModifier = new AttributeModifier(name, value, operation);
+    public AttributeEffect(Modifier... modifiers) {
+        this.modifiers = modifiers;
     }
 
-    @Override
-    public void onEquip(Player player) {
-        AttributeInstance attributeInstance = player.getAttribute(attribute);
-        if (attributeInstance != null && !attributeInstance.hasModifier(attributeModifier))
-            attributeInstance.addTransientModifier(attributeModifier);
-
-    }
 
     @Override
-    public void onUnequip(Player player) {
-        AttributeInstance attributeInstance = player.getAttribute(attribute);
-        if (attributeInstance != null)
-            attributeInstance.removeModifier(attributeModifier);
-    }
-
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         HashMultimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
-        attributeModifiers.put(attribute, attributeModifier);
+
+//        if (modifiers.length == 1) {
+//            Modifier modifier = modifiers[0];
+//            attributeModifiers.put(modifier.attribute().get(), new AttributeModifier(uuid, modifier.name(), modifier.value(), modifier.operation()));
+//            return attributeModifiers;
+//        }
+        for (int i = 0; i < modifiers.length; i++) {
+            Modifier modifier = modifiers[i];
+            UUID uuuid = UUID.nameUUIDFromBytes((slotContext.identifier() + slotContext.index() + modifier.name() + i).getBytes());
+
+            attributeModifiers.put(modifier.attribute().get(), new AttributeModifier(uuuid, modifier.name(), modifier.value(), modifier.operation()));
+        }
         return attributeModifiers;
     }
 }

@@ -37,6 +37,10 @@ public class Datagen {
 
                 add("curios.identifier.arms", "Arm");
                 add("curios.identifier.legs", "Leg");
+                add("curios.modifiers.legs", "When on legs:");
+                add("synthetic_slots.xp_boost", "XP Boost");
+
+                add("synthetic_slots.effect_description.poison_immunity", "Poison Immunity");
             }
         };
     }
