@@ -143,6 +143,20 @@ repositories {
         name = "Illusive Soulworks maven"
         url = "https://maven.theillusivec4.top/"
     }
+
+    // modrinth
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        forRepositories(fg.repository) // Only add this if you're using ForgeGradle, otherwise remove this line
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 dependencies {
@@ -176,6 +190,11 @@ dependencies {
     compileOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}"))
     // Use the full Curios API jar at runtime
     runtimeOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}"))
+
+    // target dummy
+    runtimeOnly(fg.deobf("maven.modrinth:mmmmmmmmmmmm:1.20-2.0.6-forge"))
+    runtimeOnly(fg.deobf("maven.modrinth:moonlight:1.20-2.14.1-forge"))
+
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
