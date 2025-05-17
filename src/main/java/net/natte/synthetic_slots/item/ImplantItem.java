@@ -11,13 +11,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.natte.synthetic_slots.Implant;
 import net.natte.synthetic_slots.effect.EmptyEffect;
 import org.jetbrains.annotations.Nullable;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.CuriosTooltip;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class ImplantItem extends Item implements ICurioItem {
@@ -65,7 +71,14 @@ public class ImplantItem extends Item implements ICurioItem {
     public List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
         if (this.implant.effect instanceof EmptyEffect emptyEffect) {
 
-            return List.of(emptyEffect.getDescription());
+            Set<String> curioTags = CuriosApi.getItemStackSlots(stack, FMLLoader.getDist() == Dist.CLIENT).keySet();
+            if (curioTags.contains("curio"))
+                curioTags = Set.of("curio");
+
+            CuriosTooltip curiosTooltip = new CuriosTooltip();
+            curiosTooltip.forSlots(new ArrayList<>(curioTags).toArray(new String[0]));
+            curiosTooltip.appendAdditive(emptyEffect.getDescription().copy());
+            return curiosTooltip.build();
         }
         return ICurioItem.super.getAttributesTooltip(tooltips, stack);
     }

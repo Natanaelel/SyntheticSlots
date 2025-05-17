@@ -37,6 +37,7 @@ public class Datagen {
 
                 add("curios.identifier.arms", "Arm");
                 add("curios.identifier.legs", "Leg");
+                add("curios.modifiers.arms", "When on arm:");
                 add("curios.modifiers.legs", "When on legs:");
                 add("synthetic_slots.xp_boost", "XP Boost");
 
